@@ -1,0 +1,38 @@
+hello/hello_libbitcoin_hello_a-crypto-ops.o: hello/crypto-ops.c \
+ /usr/include/stdc-predef.h /usr/include/assert.h /usr/include/features.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h hello/warnings.h \
+ /usr/include/boost/preprocessor/stringize.hpp \
+ /usr/include/boost/preprocessor/config/config.hpp hello/crypto-ops.h
+
+/usr/include/stdc-predef.h:
+
+/usr/include/assert.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/5/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+hello/warnings.h:
+
+/usr/include/boost/preprocessor/stringize.hpp:
+
+/usr/include/boost/preprocessor/config/config.hpp:
+
+hello/crypto-ops.h:
