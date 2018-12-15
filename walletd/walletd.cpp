@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
        string  straddr(argv[2]);
        string privkey= dumpprivkey(straddr,pubkey,strprivhexkey,strpubkeyid);
        cout<<"dump base58pubkey "<<straddr<<" base58 priv key "  << privkey   <<endl;
-       cout<<" hex priv key " <<  strprivhexkey <<  "hex pub key  "<< pubkey  << endl; 
-       cout<<" strpubkeyid " <<  strpubkeyid   << endl; 
+       cout<<"  hex priv key  " <<  strprivhexkey <<  "   hex pub key  "<< pubkey  << endl; 
+       cout<<"  strpubkeyid  " <<  strpubkeyid   << endl; 
     }   
     else if(stropt==string("importprivkey") )
     {

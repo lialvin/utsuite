@@ -138,6 +138,10 @@ CPubKey CWallet::GenerateNewKey()
     // Compressed public keys were introduced in version 0.6.0
     if (fCompressed)
         SetMinVersion(FEATURE_COMPRPUBKEY);
+  
+    vector<unsigned char> tempkey(secret.begin(),secret.end());
+
+    cout<<"GenerateNewKey:" <<HexStr(tempkey)<<endl;
 
     CPubKey pubkey = secret.GetPubKey();
     assert(secret.VerifyPubKey(pubkey));
