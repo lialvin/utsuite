@@ -216,8 +216,9 @@ bool CPubKey::IsFullyValid() const {
 
 std::string  CPubKey::toBase58( ) 
 {
-    std::vector<unsigned char> vchIn(begin(),end());
-    return EncodeBase58Check(vchIn);
+    std::vector<unsigned char> vchIn(begin()+1,end());
+    //return EncodeBase58Check(vchIn);
+    return EncodeBase58(vchIn);
 }   
 
 bool CPubKey::Decompress() {
