@@ -90,6 +90,8 @@ public:
     {
         Set(vch.begin(), vch.end());
     }
+ 
+    std::string  toBase58();
 
     //! Simple read-only vector-like interface to the pubkey data.
     unsigned int size() const { return GetLen(vch[0]); }

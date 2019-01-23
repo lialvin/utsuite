@@ -238,6 +238,9 @@ bool  importprivkey(const std::string& params,std::string & addr )
     assert(key.VerifyPubKey(pubkey));
     CKeyID vchAddress = pubkey.GetID();
 
+    std::string strpubkey= pubkey.toBase58();
+    std::cout<<" pub key string "<< strpubkey;
+
     CBitcoinAddress  bitAddress;
     bitAddress.Set(pubkey.GetID());
     addr = bitAddress.ToString();

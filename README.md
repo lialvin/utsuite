@@ -19,3 +19,14 @@ make & make install
 
 boost test single case test  
 r --run_test=claimtrie_tests  
+
+this tool need openssl 1.0 version
+tar -xvzf openssl-1.0.2q.tar.gz 
+cd openssl-1.0.2q/
+./config 
+make 
+make install
+
+ln -s /usr/local/ssl/include/openssl /usr/include/openssl
+ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
+

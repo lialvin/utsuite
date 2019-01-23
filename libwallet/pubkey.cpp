@@ -3,6 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "pubkey.h"
+#include "base58.h"
 
 #include <secp256k1.h>
 #include <secp256k1_recovery.h>
@@ -212,6 +213,12 @@ bool CPubKey::IsFullyValid() const {
     secp256k1_pubkey pubkey;
     return secp256k1_ec_pubkey_parse(secp256k1_context_verify, &pubkey, &(*this)[0], size());
 }
+
+std::string  CPubKey::toBase58( ) 
+{
+    std::vector<unsigned char> vchIn(begin(),end());
+    return EncodeBase58Check(vchIn);
+}   
 
 bool CPubKey::Decompress() {
     if (!IsValid())
