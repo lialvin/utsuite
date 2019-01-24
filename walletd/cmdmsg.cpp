@@ -125,7 +125,10 @@ std::string  signmnpmessage(std::string strPrivKey , std::string strMasterKey, s
 
 std::string transutaddr( std::string uoshex)
 {
- 
+    std::size_t pos = uoshex.find("UOS");
+    if (pos!=std::string::npos  )
+        return transfromuosb58(uoshex); 
+
     std::vector<unsigned char> vchIn =  ParseHex(uoshex);  
     char chHeader= vchIn[0];
     size_t len=0;
@@ -145,6 +148,21 @@ std::string transutaddr( std::string uoshex)
     return addr;
 }
 
+std::string transfromuosb58( std::string uos58)
+{
+  std::size_t pos = uos58.find("UOS");
+  if (pos==std::string::npos || pos!=0 )
+  {
+     return std::string("pubkey error");
+  }
+
+  std::string sub_str = uos58.substr(pos+3);
+  std::vector<unsigned char> vchIn2;
+  DecodeBase58(sub_str, vchIn2 );
+  //std::cout<<"ut pub key "<<HexStr( vchIn2)<<std::endl;
+  std::string hexstr= HexStr( vchIn2);
+  return transutaddr( hexstr);
+}
 
 std::string  signlicmessage(std::string strPrivKey,std::string strTxid,std::string strMasterKey,int64_t idate,int txididx)
 {
