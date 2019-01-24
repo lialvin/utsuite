@@ -25,7 +25,7 @@ void printhelp()
        cout<<"2  getnewaddress"<<endl;
        cout<<"3  dumpwallet"<<endl;
        cout<<"4  dumpprivkey  address"<<endl;
-       cout<<"5  importprivkey prikey "<<endl;
+       cout<<"5  importkey prikey "<<endl;
        cout<<"6  importwallet"<<endl;
        cout<<"7  createmultisig addr 1 addr 2 "<<endl;
        cout<<"8  extractdestfromscript "<<endl;
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
        cout<<"  hex priv key  " <<  strprivhexkey <<  "   hex pub key  "<< pubkey  << endl; 
        cout<<"  strpubkeyid  " <<  strpubkeyid   << endl; 
     }   
-    else if(stropt==string("importprivkey") )
+    else if(stropt==string("importkey") )
     {
        string  strkey(argv[2]);
        string  addr;
