@@ -22,5 +22,5 @@ std::string  signlicmessage(std::string strPrivKey,std::string strTxid,std::stri
 void  producekey(std::string  str_count );
 void  testjson(std::string  str_json );
 std::string createrawtx(std::string strjsonin,std::string strjsonout);
-
+std::string transutaddr( std::string uoshex);
 #endif

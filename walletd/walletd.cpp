@@ -34,6 +34,7 @@ void printhelp()
        cout<<"11  testjson "<<endl;
        cout<<"12  createrawtx"<<endl;
        cout<<"13  signrawtx"<<endl;
+       cout<<"14  uos2utaddr"<<endl;
 
 }
 
@@ -180,6 +181,12 @@ int main(int argc, char* argv[])
         string  strjsonkey(argv[4]);
         cout <<strjsonhex << " hex "<<  strjsontx <<" param 3 "<< strjsonkey <<"  " <<endl; 
         testjson( strjsonhex ); 
+    }
+    else if(stropt==string("uos2utaddr"))
+    {
+        string  strhex(argv[2]);
+        string addr = transutaddr(strhex);
+        cout<<" addr=" << addr<<endl;
     }
     else 
     {

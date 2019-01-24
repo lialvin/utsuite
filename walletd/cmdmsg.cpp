@@ -123,6 +123,29 @@ std::string  signmnpmessage(std::string strPrivKey , std::string strMasterKey, s
 
 }
 
+std::string transutaddr( std::string uoshex)
+{
+ 
+    std::vector<unsigned char> vchIn =  ParseHex(uoshex);  
+    char chHeader= vchIn[0];
+    size_t len=0;
+    if (chHeader == 2 || chHeader == 3)
+            len= 33;
+    if (chHeader == 4 || chHeader == 6 || chHeader == 7)
+          len=  65;
+    std::vector<unsigned char> vchIn2(vchIn.begin(),vchIn.begin()+len);
+    CPubKey pubkey(vchIn2);  
+    std::cout<<"ut pub key "<<HexStr( pubkey)<<std::endl;    
+
+    CKeyID vchAddress = pubkey.GetID();
+
+    CBitcoinAddress  bitAddress;
+    bitAddress.Set(pubkey.GetID());
+    std::string addr = bitAddress.ToString();
+    return addr;
+}
+
+
 std::string  signlicmessage(std::string strPrivKey,std::string strTxid,std::string strMasterKey,int64_t idate,int txididx)
 {
     std::string strError = "";
