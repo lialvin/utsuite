@@ -30,3 +30,5 @@ make install
 ln -s /usr/local/ssl/include/openssl /usr/include/openssl
 ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
 
+http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.0.2g-1ubuntu4.14_amd64.deb
+dpkg -i libssl-dev_1.0.2g-1ubuntu4.14_amd64.deb
