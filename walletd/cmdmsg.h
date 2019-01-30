@@ -24,4 +24,5 @@ void  testjson(std::string  str_json );
 std::string createrawtx(std::string strjsonin,std::string strjsonout);
 std::string transutaddr( std::string uoshex);
 std::string transfromuosb58( std::string uos58);
+std::string signhash(std::string strkey ,std::string strMsg);
 #endif

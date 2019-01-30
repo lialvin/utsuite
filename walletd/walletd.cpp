@@ -23,7 +23,7 @@ void printhelp()
 {
        cout<<"1  help  :"  <<endl;
        cout<<"2  getnewaddress"<<endl;
-       cout<<"3  dumpwallet"<<endl;
+       cout<<"3  dumpwallet file "<<endl;
        cout<<"4  dumpprivkey  address"<<endl;
        cout<<"5  importkey prikey "<<endl;
        cout<<"6  importwallet"<<endl;
@@ -34,7 +34,8 @@ void printhelp()
        cout<<"11  testjson "<<endl;
        cout<<"12  createrawtx"<<endl;
        cout<<"13  signrawtx"<<endl;
-       cout<<"14  uos2utaddr"<<endl;
+       cout<<"14  uos2utaddr UOS5PYtaZyQC7XMs8bAoPd9ycRJjR7wMo4oxPRdeVGSiJUrFryfEC or hex pubkey"<<endl;
+       cout<<"15  signhash  privkey message"<<endl;
 
 }
 
@@ -187,6 +188,14 @@ int main(int argc, char* argv[])
         string  strhex(argv[2]);
         string addr = transutaddr(strhex);
         cout<<" addr=" << addr<<endl;
+    }
+    else if(stropt==string("signhash"))
+    {
+        string  strkey(argv[2]);
+        string  strMsg(argv[3]);
+        string sig = signhash(strkey ,strMsg);
+        cout<< sig<<endl;
+        
     }
     else 
     {

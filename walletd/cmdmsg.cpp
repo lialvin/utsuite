@@ -35,6 +35,46 @@ string EncodeHexTx(const CTransaction& tx)
     ssTx << tx;
     return HexStr(ssTx.begin(), ssTx.end());
 }
+
+std::string signhash(std::string strkey ,std::string strMsg)
+{
+
+    CKey         key;
+    CPubKey      pubkey;
+
+    CMessageSigner privSigner;
+    if(!privSigner.GetKeysFromSecret(strkey,  key, pubkey))
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid strPrivkey  . Please useing the correct Key.");
+
+    std::string strMessage = strMsg;
+
+    CHashWriter ss(SER_GETHASH, 0);
+    ss << strMessage;
+
+    vector<unsigned char> vchSig;
+    if (!key.SignCompact(ss.GetHash(), vchSig))
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Sign failed");
+
+    CHashSigner hashSigner;
+    std::string str_err;
+
+    CHashWriter ss1(SER_GETHASH, 0);
+    ss1 << strMessage;
+
+    uint256 hash1= ss1.GetHash();
+    cout<< "hex msg="<< HexStr(hash1) << endl;
+    if( hashSigner.VerifyHash(hash1,  pubkey, vchSig,  str_err))
+    {
+       cout<< " VerifyMessage hash  success " << endl;
+    }
+    else
+    {
+       cout<< " VerifyMessage  error " << endl;
+    } 
+    cout<< "sign msg="<< HexStr(vchSig) << endl;
+    return EncodeBase58(vchSig);
+}
+
 std::string  signmnpmessage(std::string strPrivKey , std::string strMasterKey, std::string straddr)
 {
 
