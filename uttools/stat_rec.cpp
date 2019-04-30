@@ -15,16 +15,17 @@ int test_regex();
 string  getip(string ipline);
 void    find_ip(string ipsrc,string ipdst);
 void finddstfile(string it1, string ipdst);
+void statnode(string it1, string ipdst);
+string& trim(string &s);
 
 void printhelp()
 {
        cout<<"1  help  :"  <<endl;
        cout<<"2  statip ip.txt  2 "<<endl;
        cout<<"3  findip ipsrc.txt  ipdst.txt "<<endl;
+       cout<<"4  statnode  srcnode.txt  dstnode.txt "<<endl;
 
 }
-
-
 
 int main(int argc, char* argv[])
 {
@@ -56,6 +57,18 @@ int main(int argc, char* argv[])
          
          string  filestr = string(argv[2]);
          stat_ip(filestr,count );     
+    }
+    else if(stropt==string("statnode"))
+    {
+        if(argc<4)
+        {
+           cout<< " args error please see help"<<endl;
+           return 0;
+        }
+        string  srcfile = string(argv[2]);
+        string  dstfile = string(argv[3]);
+        statnode(srcfile,dstfile);
+
     }
     else if(stropt==string("findip"))
     {
@@ -122,6 +135,54 @@ void    find_ip(string ipsrc,string ipdst)
         }
        // finddstfile(it1, ipdst);    
      }    
+}
+
+
+void  statnode(string strfile , string dstfilename  )
+{
+     vector<string> ipLine;
+     vector<string> dstLine;
+     string stringLine;
+     string stringip;
+     ifstream infile; 
+     ifstream dstfile;    
+       // ofstream fout( "stat_result.txt", ios::app);    
+     infile.open (strfile); 
+     while( !infile.eof() ) // To get you all the lines.    
+     {        
+        getline(infile,stringLine); // Saves the line in stringLine.        
+        stringLine= trim(stringLine);
+        if(stringLine!=string(""))
+        {  
+           ipLine.push_back(stringLine);
+        }
+     } 
+     infile.close();
+     
+     dstfile.open (dstfilename); 
+     while( !dstfile.eof() ) // To get you all the lines.    
+     {        
+        getline(dstfile,stringLine); // Saves the line in stringLine.        
+        // stringLine= trim(stringLine);
+        if(stringLine!=string(""))
+        {  
+           dstLine.push_back(stringLine);
+        }
+     } 
+     dstfile.close();
+
+     int sum =0; 
+     for(auto it1: ipLine)
+     {  
+        for(auto it2: dstLine)
+        {  
+           sum= stat_str(it2, it1 );
+           if(sum>0)
+             cout<<it2<<endl;
+        }
+       // finddstfile(it1, ipdst);    
+     }
+
 }
 
 void finddstfile(string it1, string ipdst)
