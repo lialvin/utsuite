@@ -95,6 +95,7 @@ add_subdirectory(walletd)
 #add_subdirectory(tests) 
 #add_subdirectory(ulordcenter) 
 #add_subdirectory(unode) 
+add_subdirectory(equihash) 
 
 
 
