@@ -33,4 +33,5 @@ ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
 http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.0.2g-1ubuntu4.14_amd64.deb
 dpkg -i libssl-dev_1.0.2g-1ubuntu4.14_amd64.deb
 
-
+equihash depends
+ wget -N --no-check-certificate https://download.libsodium.org/libsodium/releases/old/libsodium-1.0.15.tar.gz
