@@ -35,3 +35,7 @@ dpkg -i libssl-dev_1.0.2g-1ubuntu4.14_amd64.deb
 
 equihash depends
  wget -N --no-check-certificate https://download.libsodium.org/libsodium/releases/old/libsodium-1.0.15.tar.gz
+  cd libsodium-1.0.15/
+   ./autogen.sh 
+   ./configure  --enable-static --disable-shared
+   make
