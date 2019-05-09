@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
+#include "equihash.h"
+#include <vector>"
 
 
 int main(int argc, const char *argv[]) {
@@ -34,3 +36,34 @@ int main(int argc, const char *argv[]) {
 	
 	return 0;
 }
+
+
+bool CheckEquihashSolution( )
+{
+    //const CBlockHeader *pblock;
+    const size_t N = 96, K = 5;
+    unsigned int n = 96 ;
+    unsigned int k = 5;
+
+    // Hash state
+    crypto_generichash_blake2b_state state;
+    EhInitialiseState(n, k, state);
+    std::vector<unsigned char>  ss;
+    // I = the block header minus nonce and solution.
+    //CEquihashInput I{*pblock};
+    // I||V
+    // CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+    //ss << I;
+    //ss << pblock->nNonce;
+
+    // H(I||V||...
+    crypto_generichash_blake2b_update(&state, (unsigned char*) &ss[0], ss.size());
+
+    bool isValid;
+    //EhIsValidSolution(n, k, state, pblock->nSolution, isValid);
+    if (!isValid)
+        return  false ;// error("CheckEquihashSolution(): invalid solution");
+
+    return true;
+}
+
