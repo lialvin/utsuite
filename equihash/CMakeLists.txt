@@ -29,7 +29,8 @@ set(IMPORTLIB  ${OPENSSL_CRYPTO_LIBRARY} ${OPENSSL_SSL_LIBRARY}
 
 #file(GLOB EQUIHASH_HEADERS "*.h" )
 
-set(EQUIHASH_HEADERS chacha20.h common.h  equihash.h  hmac_sha256.h hmac_sha512.h scrypt.h ripemd160.h sha1.h sha256.h sha512.h )  
+set(EQUIHASH_HEADERS chacha20.h common.h  equihash.h  hmac_sha256.h hmac_sha512.h scrypt.h ripemd160.h sha1.h sha256.h sha512.h serialize.h prevector.h )  
+
 
 set(EQUIHASH_SRC chacha20.cpp equihash.cpp equihash.tcc hmac_sha256.cpp hmac_sha512.cpp hmac_sha512.cpp scrypt.cpp ripemd160.cpp  sha1.cpp  sha256.cpp sha512.cpp main.cpp)  
 

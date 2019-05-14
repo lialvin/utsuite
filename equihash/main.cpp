@@ -7,6 +7,7 @@
 #include "equihash.h"
 #include <vector>"
 
+#include "serialize.h"
 
 int main(int argc, const char *argv[]) {
 
