@@ -17,13 +17,14 @@ void    find_ip(string ipsrc,string ipdst);
 void finddstfile(string it1, string ipdst);
 void statnode(string it1, string ipdst);
 string& trim(string &s);
+string getfirststr(string  srcstr);
 
 void printhelp()
 {
        cout<<"1  help  :"  <<endl;
        cout<<"2  statip ip.txt  2 "<<endl;
        cout<<"3  findip ipsrc.txt  ipdst.txt "<<endl;
-       cout<<"4  statnode  srcnode.txt  dstnode.txt "<<endl;
+       cout<<"4  stat  srcnode.txt  dstnode.txt "<<endl;
 
 }
 
@@ -58,7 +59,7 @@ int main(int argc, char* argv[])
          string  filestr = string(argv[2]);
          stat_ip(filestr,count );     
     }
-    else if(stropt==string("statnode"))
+    else if(stropt==string("stat"))
     {
         if(argc<4)
         {
@@ -68,7 +69,6 @@ int main(int argc, char* argv[])
         string  srcfile = string(argv[2]);
         string  dstfile = string(argv[3]);
         statnode(srcfile,dstfile);
-
     }
     else if(stropt==string("findip"))
     {
@@ -175,10 +175,17 @@ void  statnode(string strfile , string dstfilename  )
      for(auto it1: ipLine)
      {  
         for(auto it2: dstLine)
-        {  
-           sum= stat_str(it2, it1 );
-           if(sum>0)
-             cout<<it2<<endl;
+        { 
+           //sum= stat_str(it2, it1 );
+           string retstr =  getfirststr(it2);
+           if(retstr != string(""))
+           {
+              int npos =  it1.find(retstr);
+              if(npos !=  string::npos)
+              {
+                 cout<<it1<< "   " << it2 <<endl;
+              } 
+           }
         }
        // finddstfile(it1, ipdst);    
      }
@@ -298,6 +305,26 @@ int  stat_str(string & srcstr, string  cmpstr )
     //    cout<<cmpstr <<"   " <<sum<<endl;
     }
     return sum;
+}
+
+
+string getfirststr(string  srcstr)
+{
+    std::string result;
+
+    std::string regString("[0-9A-Z]+");
+    std::smatch ms;
+    std::regex_constants::syntax_option_type fl = std::regex_constants::icase;
+    std::regex regExpress(regString, fl);
+
+     // 查找     
+    if(std::regex_search(srcstr, ms, regExpress))
+    {
+        result= ms[0];
+        return result;
+    }
+    return  string("");
+
 }
 
 string  getip(string ipline)

@@ -26,7 +26,18 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/assign/list_of.hpp>
+
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <boost/tokenizer.hpp>
+#include <boost/lexical_cast.hpp>
+#include <regex>
+
 using namespace std;
+std::string getfirststr(std::string  srcstr, std::string&  stridx, std::string& privkey);
+string  getip(string ipline);
 
 // sign mnp message 
 string EncodeHexTx(const CTransaction& tx)
@@ -34,6 +45,98 @@ string EncodeHexTx(const CTransaction& tx)
     CDataStream ssTx(SER_NETWORK, PROTOCOL_VERSION);
     ssTx << tx;
     return HexStr(ssTx.begin(), ssTx.end());
+}
+string& trim(string &s)
+{
+    if (s.empty())
+    {
+        return s;
+    }
+    s.erase(0,s.find_first_not_of(" "));
+    s.erase(s.find_last_not_of(" ") + 1);
+    return s;
+}
+void gencmd(std::string strfile )
+{
+     std::vector<string> ipLine;
+     std::string stringLine;
+     ifstream infile;
+     ifstream dstfile;
+     // ofstream fout( "stat_result.txt", ios::app);    
+     infile.open (strfile);
+     while( !infile.eof() ) // To get you all the lines.    
+     {
+        getline(infile,stringLine);  // Saves the line in stringLine.        
+        stringLine= trim(stringLine);
+        if(stringLine!=string(""))
+        {
+           ipLine.push_back(stringLine);
+        }
+     }
+     infile.close();
+     
+     
+     int sum =0;
+     for(auto it1: ipLine)
+     {
+        std::string stridx;
+        std::string mnprivkey;
+        std::string strTxid =  getfirststr( it1,  stridx, mnprivkey);
+        std::string strPrivKey(""); 
+        int64_t   idate =1577247040;  //boost::lexical_cast<int64_t>(argv[4]);
+        idate++;
+        int     txididx= boost::lexical_cast<int>(stridx) ;
+        std::string strip = getip(it1);          
+        string lic_ret= signlicmessage(strPrivKey,strTxid,mnprivkey,idate,txididx);
+
+        std::string strpub ;
+        std::string strmnprivkey ;
+
+        getmasterpubkey(mnprivkey, strpub,strmnprivkey);
+        
+        std::cout<< "./ulord-cli masternodeRegister USu35JzWCXSvgvDL1utfFzb52zR1fdkfZ9 50  " << strTxid << "  " << stridx 
+            << "  "<<lic_ret<<"   "<< idate<< " 1   " << strpub <<std::endl;  
+     }
+}
+
+string  getip(string ipline)
+{
+    std::string result;
+
+    std::string regString("(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)");
+    std::smatch ms;
+    std::regex_constants::syntax_option_type fl = std::regex_constants::icase;
+    std::regex regExpress(regString, fl);
+
+     // 查找     
+    if(std::regex_search(ipline, ms, regExpress))
+    {
+        result= ms[0];
+        return result;
+    }
+    return  string("");
+
+}
+
+std::string getfirststr(std::string  srcstr, std::string&  stridx, std::string& privkey  )
+{
+    std::string result;
+
+    std::string regString("[0-9A-Z]+");
+    std::smatch ms;
+    std::regex_constants::syntax_option_type fl = std::regex_constants::icase;
+    std::regex regExpress(regString, fl);
+
+     // 查找     
+    if(std::regex_search(srcstr, ms, regExpress))
+    {
+        result= ms[0];
+        stridx = ms[1];
+        privkey = ms[2];
+        return result;
+    }
+    return  string("");
+
 }
 
 std::string signhash(std::string strkey ,std::string strMsg)
@@ -468,6 +571,17 @@ string   createrawtx(string param1, string param2)
     return EncodeHexTx(rawTx);
 }
 
+
+void getmasterpubkey (std::string  strkey ,std::string&  strpub , std::string & strprivkey)
+{
+
+        CBitcoinSecret  bitPrivKey;
+        bitPrivKey.SetString(strkey);
+        CKey secret =  bitPrivKey.GetKey();
+        CPubKey  pubkey=  secret.GetPubKey();
+        strprivkey = bitPrivKey.ToString();
+        strpub  =  HexStr(pubkey.begin(),pubkey.end()) ;
+}
 
 string signrawtransaction(string strHex, string strtxdata, string paramkey)
 {

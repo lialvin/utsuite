@@ -30,12 +30,15 @@ void printhelp()
        cout<<"7  createmultisig addr 1 addr 2 "<<endl;
        cout<<"8  extractdestfromscript "<<endl;
        cout<<"9  signmnpmsg collkey mnprivkey ipaddr"<<endl;
-       cout<<"10  genlic privkey mnprivkey txid itime txididx"<<endl;
+       cout<<"10  genlic  mnprivkey txid itime txididx"<<endl;
        cout<<"11  testjson "<<endl;
        cout<<"12  createrawtx"<<endl;
        cout<<"13  signrawtx"<<endl;
        cout<<"14  uos2utaddr UOS5PYtaZyQC7XMs8bAoPd9ycRJjR7wMo4oxPRdeVGSiJUrFryfEC or hex pubkey"<<endl;
        cout<<"15  signhash  privkey message"<<endl;
+       cout<<"16  masterkey privkey "<<endl;
+       cout<<"17  gencmd "<<endl;
+   
 
 }
 
@@ -145,11 +148,11 @@ int main(int argc, char* argv[])
     }
     else if(stropt==string("genlic"))
     {
-       string  strPrivKey(argv[2]);
-       string  mnprivkey(argv[3]);
-       string  strTxid(argv[4]);
-       int64_t   idate =boost::lexical_cast<int64_t>(argv[5]);
-       int     txididx= boost::lexical_cast<int>(argv[6]) ;
+       string  strPrivKey("");
+       string  mnprivkey(argv[2]);
+       string  strTxid(argv[3]);
+       int64_t   idate =boost::lexical_cast<int64_t>(argv[4]);
+       int     txididx= boost::lexical_cast<int>(argv[5]) ;
        string lic_ret= signlicmessage(strPrivKey,strTxid,mnprivkey,idate,txididx);
        cout<<"lic_ret="<<lic_ret<<endl;
     }
@@ -195,7 +198,20 @@ int main(int argc, char* argv[])
         string  strMsg(argv[3]);
         string sig = signhash(strkey ,strMsg);
         cout<< sig<<endl;
-        
+    }
+    else if(stropt==string("masterkey"))
+    {
+        string  strkey(argv[2]);
+        string  strpub;
+        string  strprivkey;
+        getmasterpubkey(strkey, strpub,strprivkey); 
+
+        cout << strprivkey <<  "  " << strpub  <<std::endl ; 
+    }
+    else if(stropt==string("gencmd"))
+    {
+       string  strfile(argv[2]);
+       gencmd(strfile);
     }
     else 
     {
