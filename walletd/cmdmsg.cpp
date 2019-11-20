@@ -36,8 +36,9 @@
 #include <regex>
 
 using namespace std;
-std::string getfirststr(std::string  srcstr, std::string&  stridx, std::string& privkey);
+std::string getfirststr(std::string  srcstr);
 string  getip(string ipline);
+string  getnumber(string ipline);
 
 // sign mnp message 
 string EncodeHexTx(const CTransaction& tx)
@@ -81,7 +82,12 @@ void gencmd(std::string strfile )
      {
         std::string stridx;
         std::string mnprivkey;
-        std::string strTxid =  getfirststr( it1,  stridx, mnprivkey);
+        std::string strTxid =  getfirststr( it1);
+        int npos = it1.find("-");
+        std::string tempstr = it1.substr(npos+1);
+        stridx  =  getnumber(tempstr);
+        std::string tempstr2 = it1.substr(68);
+        mnprivkey  =  getfirststr( tempstr2  );
         std::string strPrivKey(""); 
         int64_t   idate =1577247040;  //boost::lexical_cast<int64_t>(argv[4]);
         idate++;
@@ -95,11 +101,29 @@ void gencmd(std::string strfile )
         getmasterpubkey(mnprivkey, strpub,strmnprivkey);
         
         std::cout<< "./ulord-cli masternodeRegister USu35JzWCXSvgvDL1utfFzb52zR1fdkfZ9 50  " << strTxid << "  " << stridx 
-            << "  "<<lic_ret<<"   "<< idate<< " 1   " << strpub <<std::endl;  
+            << "  "<<lic_ret<<"   "<< idate<< " 1   " <<strip << "  " << strpub <<std::endl;  
      }
 }
 
-string  getip(string ipline)
+string  getnumber(string ipline)
+{
+    std::string result;
+
+    std::string regString("(\\d+)");
+    std::smatch ms;
+    std::regex_constants::syntax_option_type fl = std::regex_constants::icase;
+    std::regex regExpress(regString, fl);
+
+     // 查找     
+    if(std::regex_search(ipline, ms, regExpress))
+    {
+        result= ms[0];
+        return result;
+    }
+    return  string("");
+}
+
+std::string  getip(string ipline)
 {
     std::string result;
 
@@ -118,7 +142,7 @@ string  getip(string ipline)
 
 }
 
-std::string getfirststr(std::string  srcstr, std::string&  stridx, std::string& privkey  )
+std::string getfirststr(std::string  srcstr )
 {
     std::string result;
 
@@ -131,8 +155,6 @@ std::string getfirststr(std::string  srcstr, std::string&  stridx, std::string& 
     if(std::regex_search(srcstr, ms, regExpress))
     {
         result= ms[0];
-        stridx = ms[1];
-        privkey = ms[2];
         return result;
     }
     return  string("");

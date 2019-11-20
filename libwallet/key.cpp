@@ -204,14 +204,14 @@ bool CKey::SignCompact(const uint256 &hash, std::vector<unsigned char>& vchSig) 
     int rec = -1;
     secp256k1_ecdsa_recoverable_signature sig;
     int ret =0;
-    std::cout<< HexStr(hash.begin(),hash.begin()+32) << "    key=" <<HexStr(begin(),begin()+32) << std::endl; 
+    //std::cout<< HexStr(hash.begin(),hash.begin()+32) << "    key=" <<HexStr(begin(),begin()+32) << std::endl; 
     ret = secp256k1_ecdsa_sign_recoverable(secp256k1_context_sign, &sig, hash.begin(), begin(), secp256k1_nonce_function_rfc6979, NULL);
     assert(ret);
     secp256k1_ecdsa_recoverable_signature_serialize_compact(secp256k1_context_sign, (unsigned char*)&vchSig[1], &rec, &sig);
     assert(ret);
     assert(rec != -1);
     vchSig[0] = 27 + rec + (fCompressed ? 4 : 0);
-    std::cout<<"sig=" <<  HexStr(vchSig) << std::endl; 
+    //std::cout<<"sig=" <<  HexStr(vchSig) << std::endl; 
     return true;
 }
 
