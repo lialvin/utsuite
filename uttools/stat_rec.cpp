@@ -172,12 +172,12 @@ void  statnode(string strfile , string dstfilename  )
      dstfile.close();
 
      int sum =0; 
-     for(auto it1: ipLine)
+     for(auto it2: dstLine)
      {  
-        for(auto it2: dstLine)
+        string retstr =  getfirststr(it2);
+        for(auto it1: ipLine)
         { 
            //sum= stat_str(it2, it1 );
-           string retstr =  getfirststr(it2);
            if(retstr != string(""))
            {
               int npos =  it1.find(retstr);
